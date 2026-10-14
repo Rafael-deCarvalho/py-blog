@@ -22,7 +22,7 @@ class PostDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["Commentary_form"] = CommentaryForm()
+        context["comment_form"] = CommentaryForm()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -30,13 +30,16 @@ class PostDetailView(generic.DetailView):
         form = CommentaryForm(request.POST)
 
         if not request.user.is_authenticated:
-            form.add_error(None, "You must be logged in to post a Commentary.")
+            form.add_error(None, "You must be logged in to post a comment.")
+            context = self.get_context_data()
+            context["comment_form"] = form
+            return self.render_to_response(context)
 
-        if form.is_valid() and request.user.is_authenticated:
-            Commentary = form.save(commit=False)
-            Commentary.post = self.object
-            Commentary.user = request.user
-            Commentary.save()
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.post = self.object
+            comment.user = request.user
+            comment.save()
             return redirect(
                 reverse(
                     "blog:post-detail",
@@ -45,5 +48,5 @@ class PostDetailView(generic.DetailView):
             )
 
         context = self.get_context_data()
-        context["Commentary_form"] = form
+        context["comment_form"] = form
         return self.render_to_response(context)
