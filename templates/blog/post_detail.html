@@ -12,11 +12,11 @@
         </div>
     </div>
 
-    <div class="Commentarys-section bg-white p-4 rounded shadow-sm">
-        <h4 class="mb-3">Commentarys</h4>
+    <div class="Comments-section bg-white p-4 rounded shadow-sm">
+        <h4 class="mb-3">Comments</h4>
         
         <ul class="list-unstyled">
-        {% for Commentary in post.comments.all %}
+        {% for comment in post.comments.all %}
             <li class="media mb-3 border-bottom pb-2">
                 <div class="media-body">
                     <h6 class="mt-0 mb-1"><strong>{{ comment.user.username }}</strong></h6>
@@ -26,20 +26,20 @@
                 </div>
             </li>
         {% empty %}
-            <p class="text-muted">No Commentarys yet. Be the first!</p>
+            <p class="text-muted">No comments yet. Be the first!</p>
         {% endfor %}
         </ul>
 
         <div class="mt-4">
-            <h5>Leave a Commentary</h5>
+            <h5>Leave a Comment</h5>
             <form method="post" action="">
                 {% csrf_token %}
-                {{ Commentary_form|crispy }}
+                {{ comment_form|crispy }}
 
                 {% if user.is_authenticated %}
-                    <button type="submit" class="btn btn-primary mt-2">Add Commentary</button>
+                    <button type="submit" class="btn btn-primary mt-2">Add Comment</button>
                 {% else %}
-                    <button type="button" class="btn btn-secondary mt-2" disabled>Add Commentary (Log in required)</button>
+                    <button type="button" class="btn btn-secondary mt-2" disabled>Add Comment (Log in required)</button>
                 {% endif %}
             </form>
         </div>
