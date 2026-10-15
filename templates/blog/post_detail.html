@@ -16,7 +16,7 @@
         <h4 class="mb-3">Commentarys</h4>
         
         <ul class="list-unstyled">
-        {% for Commentary in post.comments.all %}
+        {% for comment in post.comments.all %}
             <li class="media mb-3 border-bottom pb-2">
                 <div class="media-body">
                     <h6 class="mt-0 mb-1"><strong>{{ comment.user.username }}</strong></h6>
