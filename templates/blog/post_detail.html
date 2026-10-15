@@ -34,7 +34,7 @@
             <h5>Leave a Commentary</h5>
             <form method="post" action="">
                 {% csrf_token %}
-                {{ Commentary_form|crispy }}
+                {{ comment_form|crispy }}
 
                 {% if user.is_authenticated %}
                     <button type="submit" class="btn btn-primary mt-2">Add Commentary</button>
